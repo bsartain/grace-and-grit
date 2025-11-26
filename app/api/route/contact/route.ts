@@ -1,26 +1,26 @@
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
+// import { NextResponse } from "next/server";
+// import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function POST(request: Request) {
-  try {
-    const { name, email, message } = await request.json();
+// export async function POST(request: Request) {
+//   try {
+//     const { name, email, message } = await request.json();
 
-    await resend.emails.send({
-      from: "Grace And Grit <no-reply@graceandgrit.com>",
-      to: "btsartain@gmail.com",
-      subject: "New Message From Grace and Grit Website",
-      html: `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong> ${message}</p>
-      `,
-    });
+//     await resend.emails.send({
+//       from: "Grace And Grit <no-reply@graceandgrit.com>",
+//       to: "btsartain@gmail.com",
+//       subject: "New Message From Grace and Grit Website",
+//       html: `
+//         <p><strong>Name:</strong> ${name}</p>
+//         <p><strong>Email:</strong> ${email}</p>
+//         <p><strong>Message:</strong> ${message}</p>
+//       `,
+//     });
 
-    return NextResponse.json({ success: true });
-  } catch (e) {
-    console.error(e);
-    return NextResponse.json({ success: false }, { status: 500 });
-  }
-}
+//     return NextResponse.json({ success: true });
+//   } catch (e) {
+//     console.error(e);
+//     return NextResponse.json({ success: false }, { status: 500 });
+//   }
+// }
