@@ -83,6 +83,7 @@ h6 {
     background: rgb(33 37 41) !important;
     border: 1px solid #474747 !important;
     border-radius: 14px;
+    margin-bottom: 20px;
   }
   .spin-class-description {
     color: #ffffff;
@@ -148,12 +149,20 @@ h6 {
 }
 
 .ebook {
-  .ebook-image {
-    background-size: contain;
-    background-position: center;
-    width: 100%;
-    height: auto;
-    background-repeat: no-repeat;
+  .ebook-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media only screen and (max-width: 767px) {
+      flex-direction: column;
+    }
+    .ebook-image {
+      background-size: contain;
+      background-position: center;
+      width: 100%;
+      min-height: 200px;
+      background-repeat: no-repeat;
+    }
   }
 }
 

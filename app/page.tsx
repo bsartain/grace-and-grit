@@ -136,17 +136,15 @@ export default function Home() {
       </section>
 
       <section id="ebook" className="section ebook">
-        <Container>
-          <div className="d-flex">
-            <div>
-              <h1>Free E-Book with Your First Session</h1>
-              <p>
-                Today it’s harder than ever to figure out what’s actually good for your body. This straightforward ebook gives you simple, sustainable
-                nutrition strategies to fuel your workouts and your daily life. Inside, you’ll find easy recipes, balanced meal ideas, and practical
-                tips to help you eat with intention, energy, and confidence.
-              </p>
-            </div>
-            <div className="ebook-image" style={{ backgroundImage: `url("/images/nutrition-ebook.jpg")` }}></div>
+        <Container className="ebook-container">
+          <div className="ebook-image" style={{ backgroundImage: `url("/images/nutrition-ebook.jpg")` }}></div>
+          <div className="ebook-copy">
+            <h1>Free E-Book with Your First Session</h1>
+            <p>
+              Today it’s harder than ever to figure out what’s actually good for your body. This straightforward ebook gives you simple, sustainable
+              nutrition strategies to fuel your workouts and your daily life. Inside, you’ll find easy recipes, balanced meal ideas, and practical
+              tips to help you eat with intention, energy, and confidence.
+            </p>
           </div>
         </Container>
       </section>
