@@ -60,21 +60,12 @@ export default function Home() {
     console.log("FORM DATA: ", formData);
     setSpinner(true);
 
-    setTimeout(() => {
-      setSpinner(false);
-      console.log("Email sent!");
-    }, 3000);
-
-    // const formData = {
-    //   name,
-    //   email,
-    //   message,
-    // };
-
-    // await fetch("/api/contact", {
-    //   method: "POST",
-    //   body: JSON.stringify(formData),
-    // });
+    await fetch("/api/contact", {
+      method: "POST",
+      body: JSON.stringify(formData),
+    });
+    setSpinner(false);
+    console.log("Email Sent");
   }
 
   return (
