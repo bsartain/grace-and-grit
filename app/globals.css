@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap");
+
+body {
+  font-family: "Geist Sans", sans-serif;
+  background-color: #121212; /* Dark background */
+  color: #ffffff; /* Light text */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Cal Sans", sans-serif;
+}
+
+.navbar {
+  padding: 20px 40px !important;
+  text-transform: uppercase;
+  font-family: Unbounded, sans-serif;
+}
+
+.navbar-transparent {
+  background-color: transparent !important;
+}
+
+.navbar-scrolled {
+  background-color: #ffffff !important;
+}
+
+.navbar-scrolled .nav-link {
+  color: #000000 !important;
+}
+
+.section {
+  padding: 60px 0;
+}
+
+.hero {
+  height: 100vh;
+  background-image: url("https://t4.ftcdn.net/jpg/06/22/76/51/360_F_622765199_tdzHcj1stmJL8sDeR89rpoo6NQk4MbYy.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  .hero-content {
+    color: #ffffff;
+  }
+  .schedule-button {
+    color: #ffffff;
+    border: 1px solid #ffffff !important;
+  }
+  .schedule-button:hover {
+    background: #ffffff;
+    color: #000000;
+  }
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.rates {
+  .rates-header {
+    color: #ffffff;
+  }
+  .card {
+    background: rgb(33 37 41) !important;
+    border: 1px solid #474747 !important;
+    border-radius: 14px;
+  }
+  .spin-class-description {
+    color: #ffffff;
+  }
+  .spin-class-tagline {
+    color: #a0a0a0;
+    font-size: 12px;
+  }
+  .spin-class-price {
+    font-size: 50px;
+    margin-top: 40px;
+  }
+  .spin-class-per-session {
+    font-size: 12px;
+  }
+  .spin-class-schedule-button {
+    border: 1px solid #ffffff !important;
+    background: transparent !important;
+    color: #ffffff;
+  }
+}
+
+.testimonials {
+  .card {
+    background: rgb(33 37 41) !important;
+    border: 1px solid #474747 !important;
+    border-radius: 14px;
+    .testimonial-image-container {
+      position: relative;
+      .testimonial-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 100px;
+        z-index: 10;
+        background-size: cover;
+        background-position: contain;
+        height: 250px;
+        border-radius: 14px 14px 0 0;
+        .bi-play-circle {
+          z-index: 999;
+          cursor: pointer;
+        }
+      }
+
+      .overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .card-body {
+      .testimonial-text {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.about {
+  color: #ffffff;
+}
+
+.ebook {
+  .ebook-image {
+    background-size: contain;
+    background-position: center;
+    width: 100%;
+    height: auto;
+    background-repeat: no-repeat;
+  }
+}
+
+.chat-bubble {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  font-size: 24px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.chat-bubble:hover {
+  background-color: #ffffff;
+  transform: scale(1.1);
+}
+
+.schedule-modal {
+  .modal-content {
+    height: 700px;
+  }
+  .schedule-iframe {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.contact {
+  color: #ffffff;
+  .form-button {
+    color: #ffffff;
+    border: 1px solid #ffffff;
+  }
+  .form-button:hover {
+    color: #000000;
+    border: 1px solid #ffffff;
+    background: #ffffff;
+  }
+  .form-button:active {
+    color: #000000 !important;
+    border: 1px solid #ffffff !important;
+    background: #ffffff !important;
+  }
+  .contact-info-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 50px;
+    .bi {
+      font-size: 50px;
+    }
+    a {
+      color: #a0a0a0;
+    }
+    @media only screen and (max-width: 600px) {
+      flex-direction: column;
+    }
+  }
+  form {
+    .form-control {
+    }
+  }
+}
