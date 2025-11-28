@@ -1,18 +1,51 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Card, Image, CardBody, CardTitle, CardText, CardImg, Spinner } from "react-bootstrap";
 import CustomNavbar from "./components/Navbar";
 import TestimonialModal from "./components/TestimonialModal";
 import ChatBubble from "./components/ChatBubble";
 import ScheduleModal from "./components/ScheduleModal";
 
+interface BikeStudiData {
+  home: Array<{
+    title: string;
+    excerpt: string;
+    content: string;
+    image: string;
+  }>;
+  sessions: Array<{
+    sessionTitle: string;
+    sessionExcerpt: string;
+    cost: number;
+  }>;
+}
+
 export default function Home() {
   const [spinner, setSpinner] = useState(false);
+  const [data, setData] = useState<any | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
+
+  // New: Fetch data on mount
+  useEffect(() => {
+    async function fetchSheetData() {
+      try {
+        const response = await fetch("/api/bikeStudioData");
+        if (!response.ok) throw new Error("Failed to fetch");
+        const data: BikeStudiData = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        console.log("Data Loaded");
+      }
+    }
+    fetchSheetData();
+  }, []);
+
   const testimonials = [
     {
       name: "Jane Doe",
@@ -83,54 +116,29 @@ export default function Home() {
         <Container>
           <h2 className="text-center mb-5 rates-header">Rates and Services</h2>
           <Row>
-            <Col md={4}>
-              <Card text="light">
-                <CardBody>
-                  <CardTitle className="spin-class-description">Single Class</CardTitle>
-                  <CardText className="spin-class-tagline">One spin class session</CardText>
-                  <CardText className="spin-class-price">
-                    <strong>
-                      $20<span className="spin-class-per-session">per session</span>
-                    </strong>
-                  </CardText>
-                  <div className="d-grid gap-2">
-                    <ScheduleModal label="Schedule a session" classForScheduleButton="btn btn-primary spin-class-schedule-button" />
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={4}>
-              <Card text="light">
-                <CardBody>
-                  <CardTitle className="spin-class-description">5-Class Package</CardTitle>
-                  <CardText className="spin-class-tagline">Five spin class sessions</CardText>
-                  <CardText className="spin-class-price">
-                    <strong>
-                      $90<span className="spin-class-per-session">Savings of $30</span>
-                    </strong>
-                  </CardText>
-                  <div className="d-grid gap-2">
-                    <ScheduleModal label="Schedule a session" classForScheduleButton="btn btn-primary spin-class-schedule-button" />
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={4}>
-              <Card text="light">
-                <CardBody>
-                  <CardTitle className="spin-class-description">Unlimited Monthly</CardTitle>
-                  <CardText className="spin-class-tagline">Unlimited access for one month</CardText>
-                  <CardText className="spin-class-price">
-                    <strong>
-                      $150<span className="spin-class-per-session">per month.</span>
-                    </strong>
-                  </CardText>
-                  <div className="d-grid gap-2">
-                    <ScheduleModal label="Schedule a session" classForScheduleButton="btn btn-primary spin-class-schedule-button" />
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
+            {data?.sessions?.length > 0
+              ? data?.sessions.map((item: any) => {
+                  return (
+                    <Col md={4}>
+                      <Card text="light">
+                        <CardBody>
+                          <CardTitle className="spin-class-description">{item.sessionTitle}</CardTitle>
+                          <CardText className="spin-class-tagline">{item.sessionExcerpt}</CardText>
+                          <CardText className="spin-class-price">
+                            <strong>
+                              ${item.sessionCost}
+                              <span className="spin-class-per-session">{item.sessionCostTag}</span>
+                            </strong>
+                          </CardText>
+                          <div className="d-grid gap-2">
+                            <ScheduleModal label="Schedule a session" classForScheduleButton="btn btn-primary spin-class-schedule-button" />
+                          </div>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  );
+                })
+              : "loading..."}
           </Row>
         </Container>
       </section>
