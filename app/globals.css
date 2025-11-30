@@ -39,9 +39,8 @@ h6 {
 
 .hero {
   height: 100vh;
-  background-image: url("https://t4.ftcdn.net/jpg/06/22/76/51/360_F_622765199_tdzHcj1stmJL8sDeR89rpoo6NQk4MbYy.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: top;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +66,7 @@ h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+  background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
 }
 
 .hero-content {
@@ -234,5 +233,12 @@ h6 {
   form {
     .form-control {
     }
+  }
+}
+
+.section-spinner {
+  .spinner-border {
+    --bs-spinner-width: 8rem;
+    --bs-spinner-height: 8rem;
   }
 }

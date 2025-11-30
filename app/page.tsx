@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Card, Image, CardBody, CardTitle, CardText, CardImg, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Button, Card, CardBody, CardTitle, CardText, CardImg, Spinner } from "react-bootstrap";
 import CustomNavbar from "./components/Navbar";
 import TestimonialModal from "./components/TestimonialModal";
 import ChatBubble from "./components/ChatBubble";
@@ -46,29 +46,6 @@ export default function Home() {
     fetchSheetData();
   }, []);
 
-  const testimonials = [
-    {
-      name: "Jane Doe",
-      text: "Grace and Grit transformed my fitness journey!",
-      image:
-        "https://media.istockphoto.com/id/1304581885/photo/portrait-of-young-woman-smiling.jpg?s=612x612&w=0&k=20&c=szq9mHVYt-iWL6TebJ6BfxSX8e9WR1HqF-PbR5oma4Y=",
-      videoId: "tsUwEDdRA3w",
-    },
-    {
-      name: "John Smith",
-      text: "The best spin classes I've ever taken! I've crushed my fitness goals",
-      image: "https://t4.ftcdn.net/jpg/05/45/06/25/360_F_545062574_b6LZ6PKkZm7r4wVBFpcQPA1j33VauEZB.jpg",
-      videoId: "DTVymzaDL18",
-    },
-    {
-      name: "Emily Johnson",
-      text: "Incredible instructors and motivating atmosphere.",
-      image:
-        "https://media.istockphoto.com/id/171576410/photo/mature-adult-fitness-instructor-leading-her-cycling-class.jpg?s=612x612&w=0&k=20&c=kpwp9SLE-xoJsXCLnY8pBbVb93orS6Z9hM5OhTqWkPU=",
-      videoId: "mSLtitl3Pb0",
-    },
-  ];
-
   const merchItems = [
     {
       name: "Grace and Grit T-Shirt",
@@ -88,57 +65,84 @@ export default function Home() {
     },
   ];
 
-  async function handleSubmit(e: any) {
-    e.preventDefault();
-    console.log("FORM DATA: ", formData);
-    setSpinner(true);
+  // async function handleSubmit(e: any) {
+  //   e.preventDefault();
+  //   console.log("FORM DATA: ", formData);
+  //   setSpinner(true);
 
-    await fetch("/api/contact", {
-      method: "POST",
-      body: JSON.stringify(formData),
-    });
-    setSpinner(false);
-    console.log("Email Sent");
-  }
+  //   await fetch("/api/contact", {
+  //     method: "POST",
+  //     body: JSON.stringify(formData),
+  //   });
+  //   setSpinner(false);
+  //   console.log("Email Sent");
+  // }
 
   return (
     <>
       <CustomNavbar />
-      <div id="home" className="hero">
-        <div className="hero-content">
-          <h1 className="display-1">Grace and Grit</h1>
-          <p className="lead">Grace is the gift. Grit is the response with every pedal</p>
-          <ScheduleModal label="Schedule a Spin Class Now" classForScheduleButton="btn btn-outline-primary btn-lg schedule-button mt-3" />
-        </div>
+      <div
+        id="home"
+        className="hero"
+        style={{
+          backgroundImage: "url('/images/spin-studio.jpg')",
+        }}
+      >
+        {data?.hero?.length > 0 ? (
+          data.hero.map((item: any) => {
+            return (
+              <div className="hero-content">
+                <h1 className="display-1">{item.homeTitle}</h1>
+                <p className="lead">
+                  {item.homeExcerptOne}
+                  <br />
+                  <span className="d-flex justify-content-center">
+                    <hr className="w-25" />
+                  </span>
+                  {item.homeExcerptTwo}
+                </p>
+                <ScheduleModal label={item.homeButtonText} classForScheduleButton="btn btn-outline-primary btn-lg schedule-button mt-3" />
+              </div>
+            );
+          })
+        ) : (
+          <div className="d-flex justify-content-center section-spinner">
+            <Spinner animation="border" className="text-white" />
+          </div>
+        )}
       </div>
 
       <section id="rates" className="section bg-dark rates">
         <Container>
           <h2 className="text-center mb-5 rates-header">Rates and Services</h2>
           <Row>
-            {data?.sessions?.length > 0
-              ? data?.sessions.map((item: any) => {
-                  return (
-                    <Col md={4}>
-                      <Card text="light">
-                        <CardBody>
-                          <CardTitle className="spin-class-description">{item.sessionTitle}</CardTitle>
-                          <CardText className="spin-class-tagline">{item.sessionExcerpt}</CardText>
-                          <CardText className="spin-class-price">
-                            <strong>
-                              ${item.sessionCost}
-                              <span className="spin-class-per-session">{item.sessionCostTag}</span>
-                            </strong>
-                          </CardText>
-                          <div className="d-grid gap-2">
-                            <ScheduleModal label="Schedule a session" classForScheduleButton="btn btn-primary spin-class-schedule-button" />
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  );
-                })
-              : "loading..."}
+            {data?.sessions?.length > 0 ? (
+              data?.sessions.map((item: any) => {
+                return (
+                  <Col md={4}>
+                    <Card text="light">
+                      <CardBody>
+                        <CardTitle className="spin-class-description">{item.sessionTitle}</CardTitle>
+                        <CardText className="spin-class-tagline">{item.sessionExcerpt}</CardText>
+                        <CardText className="spin-class-price">
+                          <strong>
+                            ${item.sessionCost}
+                            <span className="spin-class-per-session">{item.sessionCostTag}</span>
+                          </strong>
+                        </CardText>
+                        <div className="d-grid gap-2">
+                          <ScheduleModal label="Schedule a session" classForScheduleButton="btn btn-primary spin-class-schedule-button" />
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                );
+              })
+            ) : (
+              <div className="d-flex justify-content-center section-spinner">
+                <Spinner animation="border" className="text-white" />
+              </div>
+            )}
           </Row>
         </Container>
       </section>
@@ -159,12 +163,20 @@ export default function Home() {
 
       <section id="about" className="section bg-secondary about">
         <Container>
-          <h2 className="text-center mb-5">About Us</h2>
-          <p className="text-center">
-            Grace and Grit is a premier spin cycling studio located in Rock Hill. We offer high-energy classes designed to challenge and inspire you.
-            Our experienced instructors guide you through invigorating workouts in a supportive environment. Join us to build strength, endurance, and
-            community.
-          </p>
+          {data?.about.length > 0 ? (
+            data.about.map((item: any) => {
+              return (
+                <>
+                  <h1 dangerouslySetInnerHTML={{ __html: item.aboutTitle }} />
+                  <p dangerouslySetInnerHTML={{ __html: item.aboutContent }} />
+                </>
+              );
+            })
+          ) : (
+            <div className="d-flex justify-content-center section-spinner">
+              <Spinner animation="border" className="text-white" />
+            </div>
+          )}
         </Container>
       </section>
 
@@ -172,26 +184,34 @@ export default function Home() {
         <Container>
           <h2 className="text-center mb-5">Testimonials</h2>
           <Row>
-            {testimonials.map((testimonial, index) => (
-              <Col md={4} key={index} className="mb-4">
-                <Card text="light">
-                  {/* <CardImg variant="top" src={testimonial.image} /> */}
-                  <div className="testimonial-image-container">
-                    <div className="overlay"></div>
+            {data?.testimonials?.length > 0 ? (
+              data.testimonials.map((item: any, index: number) => {
+                return (
+                  <Col md={4} key={index} className="mb-4">
+                    <Card text="light">
+                      {/* <CardImg variant="top" src={testimonial.image} /> */}
+                      <div className="testimonial-image-container">
+                        <div className="overlay"></div>
 
-                    <div style={{ backgroundImage: `url("${testimonial.image}")` }} className="testimonial-image">
-                      {" "}
-                      <TestimonialModal videoId={testimonial.videoId} />
-                    </div>
-                  </div>
+                        <div style={{ backgroundImage: `url("${item.testimonialImage}")` }} className="testimonial-image">
+                          {" "}
+                          <TestimonialModal videoId={item.testimonialVideoId} />
+                        </div>
+                      </div>
 
-                  <CardBody>
-                    <CardText className="testimonial-text">"{testimonial.text}"</CardText>
-                    <CardText>- {testimonial.name}</CardText>
-                  </CardBody>
-                </Card>
-              </Col>
-            ))}
+                      <CardBody>
+                        <CardText className="testimonial-text">"{item.testimonialText}"</CardText>
+                        <CardText>- {item.testimonialName}</CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                );
+              })
+            ) : (
+              <div className="d-flex justify-content-center section-spinner">
+                <Spinner animation="border" className="text-white" />
+              </div>
+            )}
           </Row>
         </Container>
       </section>
@@ -263,7 +283,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <form onSubmit={handleSubmit}>
+          {/* <form onSubmit={handleSubmit}>
             <Row>
               <Col md={6}>
                 <div className="form-floating">
@@ -313,7 +333,7 @@ export default function Home() {
               </button>
               {spinner ? <Spinner animation="border" className="mt-4 ms-2" /> : null}
             </div>
-          </form>
+          </form> */}
           <p className="text-center mt-4">Visit us at rockhillspinstudio.com</p>
         </Container>
       </section>
