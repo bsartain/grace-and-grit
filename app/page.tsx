@@ -1,10 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Container, Row, Col, Button, Card, CardBody, CardTitle, CardText, CardImg, Spinner } from "react-bootstrap";
 import CustomNavbar from "./components/Navbar";
 import TestimonialModal from "./components/TestimonialModal";
 import ChatBubble from "./components/ChatBubble";
 import ScheduleModal from "./components/ScheduleModal";
+import Drawer from "./components/Drawer";
 
 interface BikeStudiData {
   home: Array<{
@@ -89,18 +90,18 @@ export default function Home() {
         }}
       >
         {data?.hero?.length > 0 ? (
-          data.hero.map((item: any) => {
+          data.hero.map((item: any, index: number) => {
             return (
-              <div className="hero-content">
+              <div key={index} className="hero-content">
                 <h1 className="display-1">{item.homeTitle}</h1>
-                <p className="lead">
+                <div className="lead">
                   {item.homeExcerptOne}
                   <br />
                   <span className="d-flex justify-content-center">
                     <hr className="w-25" />
                   </span>
                   {item.homeExcerptTwo}
-                </p>
+                </div>
                 <ScheduleModal label={item.homeButtonText} classForScheduleButton="btn btn-outline-primary btn-lg schedule-button mt-3" />
               </div>
             );
@@ -117,9 +118,9 @@ export default function Home() {
           <h2 className="text-center mb-5 rates-header">Rates and Services</h2>
           <Row>
             {data?.sessions?.length > 0 ? (
-              data?.sessions.map((item: any) => {
+              data?.sessions.map((item: any, index: number) => {
                 return (
-                  <Col md={4}>
+                  <Col key={index} md={4}>
                     <Card text="light">
                       <CardBody>
                         <CardTitle className="spin-class-description">{item.sessionTitle}</CardTitle>
@@ -164,12 +165,12 @@ export default function Home() {
       <section id="about" className="section bg-secondary about">
         <Container>
           {data?.about.length > 0 ? (
-            data.about.map((item: any) => {
+            data.about.map((item: any, index: number) => {
               return (
-                <>
+                <Fragment key={index}>
                   <h1 dangerouslySetInnerHTML={{ __html: item.aboutTitle }} />
                   <p dangerouslySetInnerHTML={{ __html: item.aboutContent }} />
-                </>
+                </Fragment>
               );
             })
           ) : (

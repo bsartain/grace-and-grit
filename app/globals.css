@@ -242,3 +242,309 @@ h6 {
     --bs-spinner-height: 8rem;
   }
 }
+
+.navbar-nav {
+  font-size: 13px;
+}
+
+.bi-list-light {
+  color: #ffffff !important;
+  font-size: 45px !important;
+  cursor: pointer !important;
+}
+
+.bi-list-dark {
+  color: #000000 !important;
+  font-size: 45px !important;
+  cursor: pointer !important;
+}
+
+.offcanvas {
+  background-color: #323232 !important;
+  color: #ffffff !important;
+}
+
+/* Drawer Component Styles */
+.drawer-toggle-btn {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.drawer-toggle-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.drawer-hamburger-icon {
+  width: 24px;
+  height: 24px;
+  color: inherit;
+}
+
+.hamburger-line {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.drawer-offcanvas {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Drawer Header */
+.drawer-header {
+  padding: 1.5rem 1.5rem 1rem !important;
+  overflow: hidden;
+  color: #000;
+  position: relative;
+  border-bottom: none !important;
+  border-bottom: 3px solid #000000 !important;
+}
+
+.drawer-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="0%" r="100%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><rect width="100" height="20" fill="url(%23a)"/></svg>');
+  pointer-events: none;
+}
+
+.drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 1;
+  position: relative;
+}
+
+.brand-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.brand-name {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Drawer Component - Simplified Clean Design */
+.drawer-toggle-btn {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.drawer-toggle-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transform: scale(1.05);
+}
+
+.drawer-offcanvas {
+  background-color: #ffffff;
+  border-left: 1px solid #e9ecef;
+}
+
+/* Clean Header */
+.drawer-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.drawer-brand {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+}
+
+/* Clean Body */
+.drawer-body {
+  padding: 1.5rem;
+}
+
+.drawer-nav {
+  margin-bottom: 2rem;
+}
+
+.drawer-nav-list {
+  flex-direction: column !important;
+  gap: 0;
+}
+
+.drawer-nav-link {
+  display: flex !important;
+  align-items: center;
+  padding: 1rem 1.25rem !important;
+  margin-bottom: 0.5rem;
+  border-radius: 12px;
+  color: #2c3e50 !important;
+  font-weight: 500;
+  font-size: 1.05rem;
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.drawer-nav-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #007bff;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.drawer-nav-link:hover::before {
+  transform: scaleY(1);
+}
+
+.drawer-nav-link:hover {
+  transform: translateX(8px);
+  background-color: #f8f9fa;
+  border-color: #007bff;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.1);
+  color: #0056b3 !important;
+}
+
+.drawer-nav-link i {
+  font-size: 1.1rem;
+  width: 24px;
+  text-align: center;
+  color: #6c757d;
+  transition: color 0.3s ease;
+}
+
+.drawer-nav-link:hover i {
+  color: #007bff;
+}
+
+/* Clean Footer */
+.drawer-footer {
+  padding-top: 2rem;
+  border-top: 1px solid #e9ecef;
+  padding-bottom: 1.5rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.social-link {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid #e9ecef;
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.social-link i {
+  font-size: 1.1rem;
+}
+
+.copyright {
+  text-align: center;
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Staggered Animation */
+.drawer-nav-link:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.drawer-nav-link:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.drawer-nav-link:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.drawer-nav-link:nth-child(4) {
+  animation-delay: 0.25s;
+}
+.drawer-nav-link:nth-child(5) {
+  animation-delay: 0.3s;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.drawer-offcanvas .offcanvas-body > * {
+  animation: slideInRight 0.4s ease forwards;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .drawer-body {
+    padding: 1.25rem 1rem;
+  }
+
+  .drawer-nav-link {
+    padding: 0.875rem 1rem !important;
+    font-size: 1rem;
+  }
+}
