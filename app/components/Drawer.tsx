@@ -17,7 +17,7 @@ const Drawer: React.FC<DrawerProps> = ({ color = "text-dark", brandName = "Grace
     <>
       {/* Simple Clean Hamburger Button */}
       <button className="drawer-toggle-btn" onClick={handleShow} aria-label="Open menu">
-        <i className={`bi bi-list ${color} fs-4`}></i>
+        <i className={`bi bi-list ${color} fs-1`}></i>
       </button>
 
       <Offcanvas show={show} onHide={handleClose} placement="end" className="drawer-offcanvas">

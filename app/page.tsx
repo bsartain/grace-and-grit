@@ -3,9 +3,9 @@ import { useState, useEffect, Fragment } from "react";
 import { Container, Row, Col, Button, Card, CardBody, CardTitle, CardText, CardImg, Spinner } from "react-bootstrap";
 import CustomNavbar from "./components/Navbar";
 import TestimonialModal from "./components/TestimonialModal";
-import ChatBubble from "./components/ChatBubble";
 import ScheduleModal from "./components/ScheduleModal";
 import Drawer from "./components/Drawer";
+import TestimonialCarousel from "./components/TestimonialCarousel";
 
 interface BikeStudiData {
   home: Array<{
@@ -66,19 +66,6 @@ export default function Home() {
     },
   ];
 
-  // async function handleSubmit(e: any) {
-  //   e.preventDefault();
-  //   console.log("FORM DATA: ", formData);
-  //   setSpinner(true);
-
-  //   await fetch("/api/contact", {
-  //     method: "POST",
-  //     body: JSON.stringify(formData),
-  //   });
-  //   setSpinner(false);
-  //   console.log("Email Sent");
-  // }
-
   return (
     <>
       <CustomNavbar />
@@ -86,7 +73,7 @@ export default function Home() {
         id="home"
         className="hero"
         style={{
-          backgroundImage: "url('/images/spin-studio.jpg')",
+          backgroundImage: "url('/images/home-hero.jpg')",
         }}
       >
         {data?.hero?.length > 0 ? (
@@ -113,9 +100,9 @@ export default function Home() {
         )}
       </div>
 
-      <section id="rates" className="section bg-dark rates">
+      <section id="rates" className="section bg-dark-green rates">
         <Container>
-          <h2 className="text-center mb-5 rates-header">Rates and Services</h2>
+          <h1 className="text-center mb-5 rates-header">Rates and Services</h1>
           <Row>
             {data?.sessions?.length > 0 ? (
               data?.sessions.map((item: any, index: number) => {
@@ -148,7 +135,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section id="ebook" className="section ebook">
+      {/* <section id="ebook" className="section ebook">
         <Container className="ebook-container">
           <div className="ebook-image" style={{ backgroundImage: `url("/images/nutrition-ebook.jpg")` }}></div>
           <div className="ebook-copy">
@@ -160,7 +147,7 @@ export default function Home() {
             </p>
           </div>
         </Container>
-      </section>
+      </section> */}
 
       <section id="about" className="section bg-secondary about">
         <Container>
@@ -181,43 +168,20 @@ export default function Home() {
         </Container>
       </section>
 
-      <section id="testimonials" className="section bg-dark testimonials">
+      <section id="testimonials" className="section bg-dark-green testimonials text-white">
         <Container>
-          <h2 className="text-center mb-5">Testimonials</h2>
-          <Row>
-            {data?.testimonials?.length > 0 ? (
-              data.testimonials.map((item: any, index: number) => {
-                return (
-                  <Col md={4} key={index} className="mb-4">
-                    <Card text="light">
-                      {/* <CardImg variant="top" src={testimonial.image} /> */}
-                      <div className="testimonial-image-container">
-                        <div className="overlay"></div>
-
-                        <div style={{ backgroundImage: `url("${item.testimonialImage}")` }} className="testimonial-image">
-                          {" "}
-                          <TestimonialModal videoId={item.testimonialVideoId} />
-                        </div>
-                      </div>
-
-                      <CardBody>
-                        <CardText className="testimonial-text">"{item.testimonialText}"</CardText>
-                        <CardText>- {item.testimonialName}</CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                );
-              })
-            ) : (
-              <div className="d-flex justify-content-center section-spinner">
-                <Spinner animation="border" className="text-white" />
-              </div>
-            )}
-          </Row>
+          <h1 className="text-center mb-5">Testimonials</h1>
+          {data?.testimonials?.length > 0 ? (
+            <TestimonialCarousel testimonials={data.testimonials} />
+          ) : (
+            <div className="d-flex justify-content-center section-spinner">
+              <Spinner animation="border" className="text-white" />
+            </div>
+          )}
         </Container>
       </section>
 
-      <section id="merch" className="section bg-secondary">
+      {/* <section id="merch" className="section bg-secondary">
         <Container>
           <h2 className="text-center mb-5">Merchandise</h2>
           <Row>
@@ -235,7 +199,7 @@ export default function Home() {
             ))}
           </Row>
         </Container>
-      </section>
+      </section> */}
 
       <section>
         <iframe
@@ -248,7 +212,7 @@ export default function Home() {
         ></iframe>
       </section>
 
-      <section id="contact" className="section bg-dark contact">
+      <section id="contact" className="section contact footer">
         <Container>
           <h2 className="text-center mb-5">Contact Us</h2>
           <div className="contact-info-container">
@@ -258,7 +222,7 @@ export default function Home() {
               </div>
               <h3 className="mb-2">Phone</h3>
               <p>
-                <a href="tel:803-760-6585">(803) 760-6585</a>
+                <a href="tel:803-712-3576">(803) 712-3576</a>
               </p>
             </div>
             <div className="text-center">
@@ -338,8 +302,6 @@ export default function Home() {
           <p className="text-center mt-4">Visit us at rockhillspinstudio.com</p>
         </Container>
       </section>
-
-      <ChatBubble />
     </>
   );
 }

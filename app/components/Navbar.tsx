@@ -29,7 +29,11 @@ export default function CustomNavbar() {
   return (
     <Navbar expand="lg" fixed="top" className={scrolled ? "navbar-scrolled" : "navbar-transparent"} variant={scrolled ? "light" : "dark"}>
       <Navbar.Brand href="#home" className={scrolled ? "text-dark" : "text-light"}>
-        Grace and Grit
+        <img
+          src={scrolled ? "/images/GraceGrit-Horizontal-logo-LRG-RGB.png" : "/images/GraceGrit-Horizontal-logo-Inverse-LRG-RGB.png"}
+          alt="Grace and Grit | Rock Hill | Spin Studio"
+          className="logo"
+        />
       </Navbar.Brand>
       <Drawer color={scrolled ? "bi-list-dark" : "bi-list-light"} />
       {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
