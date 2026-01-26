@@ -73,7 +73,7 @@ export default function Home() {
         id="home"
         className="hero"
         style={{
-          backgroundImage: "url('/images/home-hero.jpg')",
+          backgroundImage: "url('/images/home-hero.JPG')",
         }}
       >
         {data?.hero?.length > 0 ? (
