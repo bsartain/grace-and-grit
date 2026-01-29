@@ -2,10 +2,16 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { Source_Sans_3 } from "next/font/google";
+import { Arsenal, Source_Sans_3 } from "next/font/google";
 
 const sourceSans = Source_Sans_3({
   subsets: ["latin"],
+});
+
+const arsenal = Arsenal({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
 });
 
 // export const metadata: Metadata = {
