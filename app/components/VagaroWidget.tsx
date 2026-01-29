@@ -8,7 +8,6 @@ interface VagaroWidgetProps {
 }
 
 export default function VagaroWidget({ widgetUrl }: VagaroWidgetProps) {
-  console.log("🚀 ~ VagaroWidget ~ widgetUrl:", widgetUrl);
   const widgetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

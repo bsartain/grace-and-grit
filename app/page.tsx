@@ -102,10 +102,8 @@ export default function Home() {
                         <CardTitle className="spin-class-description">{item.sessionTitle}</CardTitle>
                         <CardText className="spin-class-tagline">{item.sessionExcerpt}</CardText>
                         <CardText className="spin-class-price">
-                          <strong>
-                            ${item.sessionCost}
-                            <span className="spin-class-per-session">{item.sessionCostTag}</span>
-                          </strong>
+                          ${item.sessionCost}
+                          <span className="spin-class-per-session">{item.sessionCostTag}</span>
                         </CardText>
                         <div className="d-grid gap-2">{sessionWidgetLink ? <VagaroWidget widgetUrl={sessionWidgetLink} /> : null}</div>
                       </CardBody>
