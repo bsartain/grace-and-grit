@@ -3,6 +3,7 @@ import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { arsenal, sourceSans } from "./fonts";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Grace and Grit - Rock Hill Spin Studio",

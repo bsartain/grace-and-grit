@@ -1,11 +1,10 @@
 "use client";
 import { useState, useEffect, Fragment } from "react";
-import { Container, Row, Col, Button, Card, CardBody, CardTitle, CardText, CardImg, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Card, CardBody, CardTitle, CardText, Spinner } from "react-bootstrap";
 import CustomNavbar from "./components/Navbar";
-import TestimonialModal from "./components/TestimonialModal";
 import ScheduleModal from "./components/ScheduleModal";
-import Drawer from "./components/Drawer";
 import TestimonialCarousel from "./components/TestimonialCarousel";
+import VagaroWidget from "./components/VagaroWidget";
 
 interface BikeStudiData {
   home: Array<{
@@ -20,6 +19,15 @@ interface BikeStudiData {
     cost: number;
   }>;
 }
+
+// Store your widget URLs (create one widget per service in Vagaro)
+const WIDGET_URLS = {
+  allServices:
+    "https://www.vagaro.com//resources/WidgetPopupLoader/OZqqCJSqDJOcT3qnV39y6RuRFXoSlXYO61Ctdg4tjxMG9pUxapkUcvCu7gevEhAJDXwQ4pcUbfY?v=Y4D5pQyz0w5rCsFtdatTwtFScJy5ZP5ENIbgSbzvNBaW#",
+  sixtyMinuteSpin:
+    "https://www.vagaro.com//resources/WidgetPopupLoader/OZqqCJSqDJOcT3qmV35y6JuPlXiz3avV34mC2PlFLDZQ6LaTMnb864WKt1fRY13R65pSo1ERtScTpqt9d0ygZawifCs7fYJEPwMc9CxkPwOc1gPcXa?v=l6USMqHjYTyZefIuhv1fbx90ZMppwlIyi3elx9vzZdH0#",
+  spinWithFriend: "URL_HERE_AFTER_CREATING_WIDGET",
+};
 
 export default function Home() {
   const [spinner, setSpinner] = useState(false);
@@ -47,24 +55,7 @@ export default function Home() {
     fetchSheetData();
   }, []);
 
-  const merchItems = [
-    {
-      name: "Grace and Grit T-Shirt",
-      image:
-        "https://thumbs.dreamstime.com/b/white-cycling-jersey-mockup-front-back-view-sport-t-shirt-design-template-blank-bike-apparel-biking-realistic-outfit-387287605.jpg",
-      price: "$25",
-    },
-    {
-      name: "Branded Water Bottle",
-      image: "https://www.shutterstock.com/image-illustration/blank-black-metal-sport-bottle-260nw-2380262725.jpg",
-      price: "$15",
-    },
-    {
-      name: "Fitness Cap",
-      image: "https://www.shutterstock.com/image-vector/visor-cap-fitness-sport-headgears-260nw-2473716805.jpg",
-      price: "$20",
-    },
-  ];
+  let sessionWidgetLink: string | undefined;
 
   return (
     <>
@@ -76,28 +67,19 @@ export default function Home() {
           backgroundImage: "url('/images/home-hero.JPG')",
         }}
       >
-        {data?.hero?.length > 0 ? (
-          data.hero.map((item: any, index: number) => {
-            return (
-              <div key={index} className="hero-content">
-                <h1 className="display-1">{item.homeTitle}</h1>
-                <div className="lead">
-                  {item.homeExcerptOne}
-                  <br />
-                  <span className="d-flex justify-content-center">
-                    <hr className="w-25" />
-                  </span>
-                  {item.homeExcerptTwo}
-                </div>
-                <ScheduleModal label={item.homeButtonText} classForScheduleButton="btn btn-outline-primary btn-lg schedule-button mt-3" />
-              </div>
-            );
-          })
-        ) : (
-          <div className="d-flex justify-content-center section-spinner">
-            <Spinner animation="border" className="text-white" />
+        <div className="hero-content">
+          <img src="/images/large-pink-logo-tagline.png" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="hero-logo" />
+          <span className="d-flex justify-content-center">
+            <hr className="w-25" />
+          </span>
+          <div className="lead mt-4">
+            <strong style={{ fontSize: "32px" }}>Rock Hill's Premier Spin Studio</strong>
+            <br />
+            <div className="mt-4">
+              <VagaroWidget widgetUrl={WIDGET_URLS.allServices} />
+            </div>
           </div>
-        )}
+        </div>
       </div>
 
       <section id="rates" className="section bg-dark-green rates">
@@ -106,6 +88,13 @@ export default function Home() {
           <Row>
             {data?.sessions?.length > 0 ? (
               data?.sessions.map((item: any, index: number) => {
+                if (item?.sessionVagaroLink) {
+                  const parser = new DOMParser();
+                  const doc = parser.parseFromString(item.sessionVagaroLink, "text/html");
+
+                  sessionWidgetLink = doc.querySelector("script")?.src;
+                }
+
                 return (
                   <Col key={index} md={4}>
                     <Card text="light">
@@ -118,9 +107,7 @@ export default function Home() {
                             <span className="spin-class-per-session">{item.sessionCostTag}</span>
                           </strong>
                         </CardText>
-                        <div className="d-grid gap-2">
-                          <ScheduleModal label="Schedule a session" classForScheduleButton="btn btn-primary spin-class-schedule-button" />
-                        </div>
+                        <div className="d-grid gap-2">{sessionWidgetLink ? <VagaroWidget widgetUrl={sessionWidgetLink} /> : null}</div>
                       </CardBody>
                     </Card>
                   </Col>
@@ -149,14 +136,22 @@ export default function Home() {
         </Container>
       </section> */}
 
-      <section id="about" className="section bg-secondary about">
+      <section id="about" className="section about">
         <Container>
           {data?.about.length > 0 ? (
             data.about.map((item: any, index: number) => {
               return (
                 <Fragment key={index}>
-                  <h1 dangerouslySetInnerHTML={{ __html: item.aboutTitle }} />
-                  <p dangerouslySetInnerHTML={{ __html: item.aboutContent }} />
+                  <div className="about-container">
+                    <div className="about-text">
+                      <h1 dangerouslySetInnerHTML={{ __html: item.aboutTitle }} />
+                      <p dangerouslySetInnerHTML={{ __html: item.aboutContent }} />
+                    </div>
+
+                    <div className="about-image-wrapper">
+                      <img src="/images/bike-lower.jpg" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="about-image" />
+                    </div>
+                  </div>
                 </Fragment>
               );
             })

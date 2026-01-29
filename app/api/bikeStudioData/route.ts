@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"; // Use 'NextApiRequest'/'NextApiResp
 export async function GET() {
   try {
     const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbycuDZoe5KxajZFGvcELHYVakgwh0IbZe5gK5jUqe3rC097VI_FRhemamI9B4jFbTagrw/exec",
+      "https://script.google.com/macros/s/AKfycbwX_phWT-u9yiulXfzyCpioxs8-0XvF0v9c-8xvtwGmdysyXhPhabqenCBw347Zg9qM6A/exec",
       {
         method: "GET",
         headers: {
