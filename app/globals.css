@@ -635,3 +635,14 @@ h1 {
 .navbar-dark {
   padding: 0 15px !important;
 }
+
+.vagaro-popup-widget {
+  width: 100% !important;
+  .loader-btn-html {
+    width: 60% !important;
+    border-radius: 5px !important;
+    font-family: "Source Sans 3", "Source Sans 3 Fallback" !important;
+    font-size: 20px !important;
+    font-weight: 400;
+  }
+}
