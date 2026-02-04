@@ -4,6 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Arsenal, Source_Sans_3 } from "next/font/google";
 
+const arsenal = Arsenal({
+  subsets: ["latin"],
+  weight: ["400", "700"], // Specify the weights you need
+  display: "swap",
+});
+
 const sourceSans = Source_Sans_3({
   subsets: ["latin"],
 });
