@@ -1,10 +1,11 @@
-"use client";
-import { useState, useEffect, Fragment } from "react";
+import { Fragment } from "react";
 import { Container, Row, Col, Card, CardBody, CardTitle, CardText, Spinner } from "react-bootstrap";
-import CustomNavbar from "./components/Navbar";
-import ScheduleModal from "./components/ScheduleModal";
-import TestimonialCarousel from "./components/TestimonialCarousel";
-import VagaroWidget from "./components/VagaroWidget";
+import CustomNavbar from "@/app/components/Navbar";
+import ScheduleModal from "@/app/components/ScheduleModal";
+import TestimonialCarousel from "@/app/components/TestimonialCarousel";
+import VagaroWidget from "@/app/components/VagaroWidget";
+import { getAllHomePosts, getRatesAndServices, getTestimonials } from "@/app/api/keystatic/lib/keystatic";
+import { DocumentRenderer } from "@keystatic/core/renderer";
 
 interface BikeStudiData {
   home: Array<{
@@ -20,42 +21,29 @@ interface BikeStudiData {
   }>;
 }
 
-// Store your widget URLs (create one widget per service in Vagaro)
-const WIDGET_URLS = {
-  allServices:
-    "https://www.vagaro.com//resources/WidgetPopupLoader/OZqqCJSqDJOcT3qnV39y6RuRFXoSlXYO61Ctdg4tjxMG9pUxapkUcvCu7gevEhAJDXwQ4pcUbfY?v=Y4D5pQyz0w5rCsFtdatTwtFScJy5ZP5ENIbgSbzvNBaW#",
-  sixtyMinuteSpin:
-    "https://www.vagaro.com//resources/WidgetPopupLoader/OZqqCJSqDJOcT3qmV35y6JuPlXiz3avV34mC2PlFLDZQ6LaTMnb864WKt1fRY13R65pSo1ERtScTpqt9d0ygZawifCs7fYJEPwMc9CxkPwOc1gPcXa?v=l6USMqHjYTyZefIuhv1fbx90ZMppwlIyi3elx9vzZdH0#",
-  spinWithFriend: "URL_HERE_AFTER_CREATING_WIDGET",
-};
+export default async function Home() {
+  const homePosts = await getAllHomePosts();
+  const initialTestimonialData = await getTestimonials();
 
-export default function Home() {
-  const [spinner, setSpinner] = useState(false);
-  const [data, setData] = useState<any | null>(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const testimonialData = await Promise.all(
+    initialTestimonialData
+      .sort((a: any, b: any) => (a.entry.order?.value || 0) - (b.entry.order?.value || 0))
+      .map(async (page: any) => ({
+        title: page.entry.title,
+        order: page.entry.order?.value,
+        content: await page.entry.content(),
+        publishedDate: page.entry.publishedDate,
+      }))
+  );
 
-  // New: Fetch data on mount
-  useEffect(() => {
-    async function fetchSheetData() {
-      try {
-        const response = await fetch("/api/bikeStudioData");
-        if (!response.ok) throw new Error("Failed to fetch");
-        const data: BikeStudiData = await response.json();
-        setData(data);
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        console.log("Data Loaded");
-      }
-    }
-    fetchSheetData();
-  }, []);
+  const aboutSection: any = homePosts.filter((item: any) => item.slug === "about-us");
 
-  let sessionWidgetLink: string | undefined;
+  const rates = (await getRatesAndServices()).sort((a: any, b: any) => a.entry.order - b.entry.order);
+
+  function extractScriptSrc(html: string): string | null {
+    const match = html.match(/<script[^>]+src=["']([^"']+)["']/i);
+    return match ? match[1] : null;
+  }
 
   return (
     <>
@@ -76,7 +64,11 @@ export default function Home() {
             <strong style={{ fontSize: "32px" }}>Rock Hill's Premier Spin Studio</strong>
             <br />
             <div className="mt-4">
-              <VagaroWidget widgetUrl={WIDGET_URLS.allServices} />
+              <VagaroWidget
+                widgetUrl={
+                  "https://www.vagaro.com//resources/WidgetPopupLoader/OZqqCJSqDJOcT3qnV39y6RuRFXoSlXYO61Ctdg4tjxMG9pUxapkUcvCu7gevEhAJDXwQ4pcUbfY?v=Y4D5pQyz0w5rCsFtdatTwtFScJy5ZP5ENIbgSbzvNBaW#"
+                }
+              />
             </div>
           </div>
         </div>
@@ -86,26 +78,21 @@ export default function Home() {
         <Container>
           <h1 className="text-center mb-5 rates-header">Rates and Services</h1>
           <Row>
-            {data?.sessions?.length > 0 ? (
-              data?.sessions.map((item: any, index: number) => {
-                if (item?.sessionVagaroLink) {
-                  const parser = new DOMParser();
-                  const doc = parser.parseFromString(item.sessionVagaroLink, "text/html");
-
-                  sessionWidgetLink = doc.querySelector("script")?.src;
-                }
+            {rates.length > 0 ? (
+              rates.map(async (item: any, index: number) => {
+                const scriptUrl = extractScriptSrc(item.entry.vagaroWidget);
 
                 return (
                   <Col key={index} md={4}>
                     <Card text="light">
                       <CardBody>
-                        <CardTitle className="spin-class-description">{item.sessionTitle}</CardTitle>
-                        <CardText className="spin-class-tagline">{item.sessionExcerpt}</CardText>
+                        <CardTitle className="spin-class-description">{item.entry.title}</CardTitle>
+                        <CardText className="spin-class-tagline">{item.entry.excerpt}</CardText>
                         <CardText className="spin-class-price">
-                          ${item.sessionCost}
-                          <span className="spin-class-per-session">{item.sessionCostTag}</span>
+                          ${item.entry.price}
+                          <span className="spin-class-per-session">per session</span>
                         </CardText>
-                        <div className="d-grid gap-2">{sessionWidgetLink ? <VagaroWidget widgetUrl={sessionWidgetLink} /> : null}</div>
+                        <div className="d-grid gap-2">{scriptUrl ? <VagaroWidget widgetUrl={scriptUrl} /> : null}</div>
                       </CardBody>
                     </Card>
                   </Col>
@@ -136,16 +123,15 @@ export default function Home() {
 
       <section id="about" className="section about">
         <Container>
-          {data?.about.length > 0 ? (
-            data.about.map((item: any, index: number) => {
+          {aboutSection?.length > 0 ? (
+            aboutSection?.map(async (item: any, index: number) => {
               return (
                 <Fragment key={index}>
                   <div className="about-container">
                     <div className="about-text">
-                      <h1 dangerouslySetInnerHTML={{ __html: item.aboutTitle }} />
-                      <p dangerouslySetInnerHTML={{ __html: item.aboutContent }} />
+                      <h1>{item.entry.title}</h1>
+                      <DocumentRenderer document={await item.entry.content()} />
                     </div>
-
                     <div className="about-image-wrapper">
                       <img src="/images/bike-lower.jpg" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="about-image" />
                     </div>
@@ -164,8 +150,8 @@ export default function Home() {
       <section id="testimonials" className="section bg-dark-green testimonials text-white">
         <Container>
           <h1 className="text-center mb-5">Testimonials</h1>
-          {data?.testimonials?.length > 0 ? (
-            <TestimonialCarousel testimonials={data.testimonials} />
+          {testimonialData.length > 0 ? (
+            <TestimonialCarousel testimonials={testimonialData} />
           ) : (
             <div className="d-flex justify-content-center section-spinner">
               <Spinner animation="border" className="text-white" />

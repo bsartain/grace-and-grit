@@ -2,8 +2,16 @@
 
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import { DocumentRenderer } from "@keystatic/core/renderer";
 
-const TestimonialsCarousel: React.FC<{ testimonials: any }> = ({ testimonials }) => {
+interface Testimony {
+  title: string;
+  order: number;
+  publishedDate: string;
+  content: any;
+}
+
+const TestimonialsCarousel: React.FC<{ testimonials: Testimony[] }> = ({ testimonials }) => {
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     mode: "snap",
@@ -17,17 +25,20 @@ const TestimonialsCarousel: React.FC<{ testimonials: any }> = ({ testimonials })
     <div className="max-w-xl mx-auto">
       {/* Slider */}
       <div ref={sliderRef} className="keen-slider">
-        {testimonials.map((t: any, idx: number) => (
+        {testimonials.map((testimony, idx) => (
           <div key={idx} className="keen-slider__slide px-6 text-center">
-            <p className="text-lg italic mb-4">{t.testimonialText}</p>
-            <p className="font-semibold">— {t.testimonialName}</p>
+            {/* Render the document content */}
+            <div className="text-lg italic mb-4">
+              <DocumentRenderer document={testimony.content} />
+            </div>
+            <p className="font-semibold">— {testimony.title}</p>
           </div>
         ))}
       </div>
 
       {/* Dots */}
       <div className="d-flex justify-content-center">
-        {testimonials.map((_: any, idx: number) => (
+        {testimonials.map((_, idx) => (
           <button
             key={idx}
             onClick={() => instanceRef.current?.moveToIdx(idx)}
