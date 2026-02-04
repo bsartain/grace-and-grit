@@ -7,7 +7,7 @@ import Drawer from "./Drawer";
 import Image from "next/image";
 
 export default function CustomNavbar() {
-  const [scrolled, setScrolled] = useState<Boolean>(false);
+  const [scrolled, setScrolled] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
