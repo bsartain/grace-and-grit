@@ -3,15 +3,9 @@
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { DocumentRenderer } from "@keystatic/core/renderer";
+import { ProcessedTestimonial } from "../page";
 
-interface Testimony {
-  title: string;
-  order: number;
-  publishedDate: string;
-  content: any;
-}
-
-const TestimonialsCarousel: React.FC<{ testimonials: Testimony[] }> = ({ testimonials }) => {
+const TestimonialsCarousel: React.FC<{ testimonials: ProcessedTestimonial[] }> = ({ testimonials }) => {
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     mode: "snap",

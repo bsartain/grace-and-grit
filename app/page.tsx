@@ -1,44 +1,52 @@
 import { Fragment } from "react";
 import { Container, Row, Col, Card, CardBody, CardTitle, CardText, Spinner } from "react-bootstrap";
 import CustomNavbar from "@/app/components/Navbar";
-import ScheduleModal from "@/app/components/ScheduleModal";
 import TestimonialCarousel from "@/app/components/TestimonialCarousel";
 import VagaroWidget from "@/app/components/VagaroWidget";
 import { getAllHomePosts, getRatesAndServices, getTestimonials } from "@/app/api/keystatic/lib/keystatic";
 import { DocumentRenderer } from "@keystatic/core/renderer";
+import type { DocumentElement } from "@keystatic/core";
 
-interface BikeStudiData {
-  home: Array<{
+export interface KeystaticEntry {
+  slug: string;
+  entry: {
     title: string;
-    excerpt: string;
-    content: string;
-    image: string;
-  }>;
-  sessions: Array<{
-    sessionTitle: string;
-    sessionExcerpt: string;
-    cost: number;
-  }>;
+    order?: number | null;
+    publishedDate: string | null;
+    content: () => Promise<DocumentElement[]>;
+    price?: string;
+    excerpt?: string;
+    vagaroWidget?: string | undefined;
+  };
+}
+
+export interface ProcessedTestimonial {
+  title: string;
+  order?: number | null;
+  content: DocumentElement[];
+  publishedDate: string | null;
 }
 
 export default async function Home() {
-  const homePosts = await getAllHomePosts();
+  const homePosts: KeystaticEntry[] = await getAllHomePosts();
   const initialTestimonialData = await getTestimonials();
 
-  const testimonialData = await Promise.all(
+  const testimonialData: ProcessedTestimonial[] = await Promise.all(
     initialTestimonialData
-      .sort((a: any, b: any) => (a.entry.order?.value || 0) - (b.entry.order?.value || 0))
-      .map(async (page: any) => ({
-        title: page.entry.title,
-        order: page.entry.order?.value,
-        content: await page.entry.content(),
-        publishedDate: page.entry.publishedDate,
-      }))
+      .sort((a: KeystaticEntry, b: KeystaticEntry) => (a.entry.order || 0) - (b.entry.order || 0))
+      .map(
+        async (page: KeystaticEntry): Promise<ProcessedTestimonial> => ({
+          title: page.entry.title,
+          order: page.entry.order,
+          content: await page.entry.content(),
+          publishedDate: page.entry.publishedDate,
+        })
+      )
   );
 
-  const aboutSection: any = homePosts.filter((item: any) => item.slug === "about-us");
+  const aboutSection: KeystaticEntry[] = homePosts.filter((item: { slug: string }) => item.slug === "about-us");
 
-  const rates = (await getRatesAndServices()).sort((a: any, b: any) => a.entry.order - b.entry.order);
+  const rates = (await getRatesAndServices()).sort((a: KeystaticEntry, b: KeystaticEntry) => (a.entry.order || 0) - (b.entry.order || 0));
 
   function extractScriptSrc(html: string): string | null {
     const match = html.match(/<script[^>]+src=["']([^"']+)["']/i);
@@ -79,8 +87,8 @@ export default async function Home() {
           <h1 className="text-center mb-5 rates-header">Rates and Services</h1>
           <Row>
             {rates.length > 0 ? (
-              rates.map(async (item: any, index: number) => {
-                const scriptUrl = extractScriptSrc(item.entry.vagaroWidget);
+              rates.map(async (item: KeystaticEntry, index: number) => {
+                const scriptUrl = item.entry.vagaroWidget ? extractScriptSrc(item.entry.vagaroWidget) : null;
 
                 return (
                   <Col key={index} md={4}>
@@ -124,7 +132,7 @@ export default async function Home() {
       <section id="about" className="section about">
         <Container>
           {aboutSection?.length > 0 ? (
-            aboutSection?.map(async (item: any, index: number) => {
+            aboutSection?.map(async (item: KeystaticEntry, index: number) => {
               return (
                 <Fragment key={index}>
                   <div className="about-container">

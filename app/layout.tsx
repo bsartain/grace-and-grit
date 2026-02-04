@@ -8,17 +8,6 @@ const sourceSans = Source_Sans_3({
   subsets: ["latin"],
 });
 
-const arsenal = Arsenal({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
-});
-
-// export const metadata: Metadata = {
-//   title: "Grace and Grit - Rock Hill Spin Studio",
-//   description: "Spin cycling classes at Grace and Grit",
-// };
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://rockhillspinstudio.com"),
 
