@@ -6,7 +6,6 @@ import VagaroWidget from "@/app/components/VagaroWidget";
 import { getAllHomePosts, getRatesAndServices, getTestimonials } from "@/app/api/keystatic/lib/keystatic";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 import type { DocumentElement } from "@keystatic/core";
-import Image from "next/image";
 
 export interface KeystaticEntry {
   slug: string;
@@ -65,7 +64,7 @@ export default async function Home() {
         }}
       >
         <div className="hero-content">
-          <Image src="/images/large-pink-logo-tagline.png" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="hero-logo" />
+          <img src="/images/large-pink-logo-tagline.png" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="hero-logo" />
           <span className="d-flex justify-content-center">
             <hr className="w-25" />
           </span>
@@ -142,7 +141,7 @@ export default async function Home() {
                       <DocumentRenderer document={await item.entry.content()} />
                     </div>
                     <div className="about-image-wrapper">
-                      <Image src="/images/bike-lower.jpg" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="about-image" />
+                      <img src="/images/bike-lower.jpg" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="about-image" />
                     </div>
                   </div>
                 </Fragment>
