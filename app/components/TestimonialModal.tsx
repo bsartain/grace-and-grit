@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 export default function TestimonialModal({ videoId }: { videoId: string }) {
   const [show, setShow] = useState(false);

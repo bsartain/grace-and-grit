@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
 import Offcanvas from "react-bootstrap/Offcanvas";
@@ -24,7 +25,7 @@ const Drawer: React.FC<DrawerProps> = ({ color = "text-dark", brandName = "Grace
         {/* Clean Header */}
         <Offcanvas.Header closeButton className="drawer-header">
           <Offcanvas.Title className="drawer-brand">
-            <img src="/images/drawer-logo.png" alt="Grace and Grit | Rock Hill | Spin Studio" className="drawer-logo" />
+            <Image src="/images/drawer-logo.png" alt="Grace and Grit | Rock Hill | Spin Studio" className="drawer-logo" />
           </Offcanvas.Title>
         </Offcanvas.Header>
 

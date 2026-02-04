@@ -168,26 +168,6 @@ export default async function Home() {
         </Container>
       </section>
 
-      {/* <section id="merch" className="section bg-secondary">
-        <Container>
-          <h2 className="text-center mb-5">Merchandise</h2>
-          <Row>
-            {merchItems.map((item, index) => (
-              <Col md={4} key={index} className="mb-4">
-                <Card bg="dark" text="light">
-                  <CardImg variant="top" src={item.image} />
-                  <CardBody>
-                    <CardTitle>{item.name}</CardTitle>
-                    <CardText>{item.price}</CardText>
-                    <Button variant="primary">Buy Now</Button>
-                  </CardBody>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </section> */}
-
       <section>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3170.1663844205364!2d-81.0173780525053!3d34.921126490165754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x885688597bdf05f9%3A0x59b623a0f096e59b!2s621%20E%20Main%20St%2C%20Rock%20Hill%2C%20SC%2029730!5e0!3m2!1sen!2sus!4v1764106199037!5m2!1sen!2sus"
@@ -235,57 +215,6 @@ export default async function Home() {
               </p>
             </div>
           </div>
-          {/* <form onSubmit={handleSubmit}>
-            <Row>
-              <Col md={6}>
-                <div className="form-floating">
-                  <input
-                    type="text"
-                    className="form-control mb-3"
-                    id="floatingName"
-                    placeholder="name"
-                    value={formData.name}
-                    onChange={(e: any) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                  />
-                  <label htmlFor="floatingName">Name</label>
-                </div>
-              </Col>
-              <Col md={6}>
-                <div className="form-floating mb-3">
-                  <input
-                    type="email"
-                    className="form-control mb-3"
-                    id="floatingInput"
-                    placeholder="name@example.com"
-                    value={formData.email}
-                    onChange={(e: any) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                  />
-                  <label htmlFor="floatingInput">Email address</label>
-                </div>
-              </Col>
-            </Row>
-            <div className="form-floating">
-              <textarea
-                className="form-control mb-3"
-                style={{ height: "100px" }}
-                placeholder="Leave a comment here"
-                id="floatingTextarea"
-                rows={5}
-                value={formData.message}
-                onChange={(e: any) => setFormData({ ...formData, message: e.target.value })}
-                required
-              ></textarea>
-              <label htmlFor="floatingTextarea">Message</label>
-            </div>
-            <div className="d-flex">
-              <button className="btn btn-outline-primary btn-lg form-button mt-3" type="submit">
-                Send Message
-              </button>
-              {spinner ? <Spinner animation="border" className="mt-4 ms-2" /> : null}
-            </div>
-          </form> */}
           <p className="text-center mt-4">Visit us at rockhillspinstudio.com</p>
         </Container>
       </section>
