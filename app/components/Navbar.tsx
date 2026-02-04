@@ -1,7 +1,7 @@
 // components/Navbar.tsx
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "react-bootstrap";
 import Drawer from "./Drawer";
 import Image from "next/image";
