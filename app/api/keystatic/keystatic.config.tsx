@@ -7,6 +7,7 @@ export default config({
       : {
           kind: "github",
           repo: "bsartain/grace-and-grit",
+          branchPrefix: "keystatic/",
         },
   collections: {
     posts: collection({
