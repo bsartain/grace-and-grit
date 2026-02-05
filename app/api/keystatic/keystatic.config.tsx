@@ -1,9 +1,12 @@
 import { config, collection, fields } from "@keystatic/core";
 
 export default config({
-  storage: {
-    kind: "cloud",
-  },
+  storage:
+    process.env.NODE_ENV === "development"
+      ? { kind: "local" }
+      : {
+          kind: "cloud",
+        },
   cloud: {
     project: "grace-and-grit/grace-and-grit",
   },
@@ -32,6 +35,43 @@ export default config({
       format: { contentField: "content" },
       schema: {
         title: fields.slug({ name: { label: "Title" } }),
+        content: fields.document({
+          label: "Content",
+          formatting: true,
+          dividers: true,
+          links: true,
+          images: true,
+        }),
+        publishedDate: fields.date({ label: "Published Date" }),
+      },
+    }),
+    contactSection: collection({
+      label: "Contact Section",
+      slugField: "title",
+      path: "content/contactSection/*",
+      format: { contentField: "content" },
+      schema: {
+        title: fields.slug({ name: { label: "Title" } }),
+        phone: fields.text({
+          label: "Phone",
+          multiline: false,
+        }),
+        email: fields.text({
+          label: "Email",
+          multiline: false,
+        }),
+        location: fields.text({
+          label: "Address",
+          multiline: false,
+        }),
+        googleMapLink: fields.text({
+          label: "Goolge map Link",
+          multiline: false,
+        }),
+        googleMapEmbeddedCode: fields.text({
+          label: "Google Map Embeded Code",
+          multiline: true,
+        }),
         content: fields.document({
           label: "Content",
           formatting: true,

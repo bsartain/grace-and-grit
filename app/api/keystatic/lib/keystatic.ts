@@ -23,3 +23,7 @@ export async function getRatesAndServices() {
 export async function getTestimonials() {
   return await reader.collections.testimonials.all();
 }
+
+export async function getContactSection() {
+  return await reader.collections.contactSection.all();
+}
