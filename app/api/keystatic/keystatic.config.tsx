@@ -1,14 +1,12 @@
 import { config, collection, fields } from "@keystatic/core";
 
 export default config({
-  storage:
-    process.env.NODE_ENV === "development"
-      ? { kind: "local" }
-      : {
-          kind: "github",
-          repo: "bsartain/grace-and-grit",
-          branchPrefix: "keystatic/",
-        },
+  storage: {
+    kind: "cloud",
+  },
+  cloud: {
+    project: "grace-and-grit/grace-and-grit",
+  },
   collections: {
     posts: collection({
       label: "Posts",
