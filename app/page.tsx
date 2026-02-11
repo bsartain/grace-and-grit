@@ -109,7 +109,7 @@ export default async function Home() {
         ? specialOffer.map(async (item: KeystaticEntry, index: number) => {
             const scriptUrl = item.entry.vagaroWidget ? extractScriptSrc(item.entry.vagaroWidget) : null;
             return (
-              <section id="specialOffer" className="section special-offer">
+              <section id="specialOffer" className="section special-offer" key={index}>
                 <Container>
                   <div className="special-container">
                     <div className="flex-shrink-0">
