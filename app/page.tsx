@@ -3,9 +3,10 @@ import { Container, Row, Col, Card, CardBody, CardTitle, CardText, Spinner } fro
 import CustomNavbar from "@/app/components/Navbar";
 import TestimonialCarousel from "@/app/components/TestimonialCarousel";
 import VagaroWidget from "@/app/components/VagaroWidget";
-import { getAllHomePosts, getRatesAndServices, getTestimonials, getContactSection } from "@/app/api/keystatic/lib/keystatic";
+import { getAllHomePosts, getRatesAndServices, getTestimonials, getSpecialOffer } from "@/app/api/keystatic/lib/keystatic";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 import type { DocumentElement } from "@keystatic/core";
+import Footer from "./components/Footer";
 
 export interface KeystaticEntry {
   slug: string;
@@ -21,6 +22,8 @@ export interface KeystaticEntry {
     email?: string | null;
     googleMapEmbeddedCode?: string | null;
     googleMapLink?: string | null;
+    featuredImage?: string | null;
+    specialOffer?: boolean;
   };
 }
 
@@ -34,7 +37,6 @@ export interface ProcessedTestimonial {
 export default async function Home() {
   const homePosts: KeystaticEntry[] = await getAllHomePosts();
   const initialTestimonialData = await getTestimonials();
-  const contactSection = await getContactSection();
 
   const testimonialData: ProcessedTestimonial[] = await Promise.all(
     initialTestimonialData
@@ -52,6 +54,9 @@ export default async function Home() {
   const aboutSection: KeystaticEntry[] = homePosts.filter((item: { slug: string }) => item.slug === "about-us");
 
   const rates = (await getRatesAndServices()).sort((a: KeystaticEntry, b: KeystaticEntry) => (a.entry.order || 0) - (b.entry.order || 0));
+
+  const specialOffer = await getSpecialOffer();
+  const hasSpecialOffer = specialOffer.some((item: KeystaticEntry) => item.entry.specialOffer);
 
   function extractScriptSrc(html: string): string | null {
     const match = html.match(/<script[^>]+src=["']([^"']+)["']/i);
@@ -99,6 +104,33 @@ export default async function Home() {
           </div>
         </div>
       </div>
+
+      {specialOffer.length > 0 && hasSpecialOffer
+        ? specialOffer.map(async (item: KeystaticEntry, index: number) => {
+            const scriptUrl = item.entry.vagaroWidget ? extractScriptSrc(item.entry.vagaroWidget) : null;
+            return (
+              <section id="specialOffer" className="section special-offer">
+                <Container>
+                  <div className="special-container">
+                    <div className="flex-shrink-0">
+                      <img
+                        src={`/images/${item.slug}/featuredImage.JPG`}
+                        alt="Description"
+                        className="img-fluid rounded"
+                        style={{ width: "300px", objectFit: "cover" }}
+                      />
+                    </div>
+                    <div className="flex-grow-1">
+                      <h2 className="mb-3 fw-bold">{item.entry.title}</h2>
+                      <DocumentRenderer document={await item.entry.content()} />
+                      <div className="d-grid gap-2">{scriptUrl ? <VagaroWidget widgetUrl={scriptUrl} /> : null}</div>
+                    </div>
+                  </div>
+                </Container>
+              </section>
+            );
+          })
+        : null}
 
       <section id="rates" className="section bg-dark-green rates">
         <Container>
@@ -185,65 +217,7 @@ export default async function Home() {
           )}
         </Container>
       </section>
-
-      {contactSection.length > 0
-        ? contactSection.map((item: KeystaticEntry, index: number) => {
-            const { entry } = item;
-            return (
-              <>
-                <section>
-                  <iframe
-                    src={entry.googleMapEmbeddedCode ? googleEmbedString(entry.googleMapEmbeddedCode) : ""}
-                    width="100%"
-                    height="450"
-                    style={{ border: "0" }}
-                    allowFullScreen={true}
-                    loading="lazy"
-                  ></iframe>
-                </section>
-                <section key={index} id="contact" className="section contact footer">
-                  <Container>
-                    <h2 className="text-center mb-5">{entry.title}</h2>
-                    <div className="contact-info-container">
-                      <div className="text-center">
-                        <div>
-                          <i className="bi bi-telephone-x"></i>
-                        </div>
-                        <h3 className="mb-2">Phone</h3>
-                        <p>
-                          <a href={`tel:${entry.phone ? formatTel(entry.phone) : entry.phone}`}>{entry.phone}</a>
-                        </p>
-                      </div>
-                      <div className="text-center">
-                        <div>
-                          <i className="bi bi-envelope"></i>
-                        </div>
-                        <h3 className="mb-2">Email</h3>
-                        <p>
-                          <a href={`mailto:${entry.email}`}>{entry.email}</a>
-                        </p>
-                      </div>
-                      <div className="text-center">
-                        <div>
-                          <i className="bi bi-geo-alt"></i>
-                        </div>
-                        <h3 className="mb-2">Location</h3>
-                        <p>
-                          <a href={entry.googleMapLink ? entry.googleMapLink : "https://maps.app.goo.gl/MYCHA2KRrBGrxXcC9"} target="_blank">
-                            621 East Main St.
-                            <br />
-                            Rock Hill SC 29730
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-center mt-4">Visit us at rockhillspinstudio.com</p>
-                  </Container>
-                </section>
-              </>
-            );
-          })
-        : null}
+      <Footer />
     </>
   );
 }
