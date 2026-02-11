@@ -14,8 +14,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
 
   if (!post) return { title: "Post Not Found" };
 
@@ -25,14 +26,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug);
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
 
   if (!post) {
     notFound();
   }
 
-  const imageUrl = params.slug ? `/images/${params.slug}/featuredImage.JPG` : "/images/home-hero.JPG";
+  const imageUrl = slug ? `/images/${slug}/featuredImage.JPG` : "/images/home-hero.JPG";
 
   return (
     <>
