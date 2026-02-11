@@ -18,6 +18,10 @@ export default config({
       format: { contentField: "content" },
       schema: {
         title: fields.slug({ name: { label: "Title" } }),
+        excerpt: fields.text({
+          label: "Excerpt",
+          multiline: false,
+        }),
         content: fields.document({
           label: "Content",
           formatting: true,
@@ -25,6 +29,7 @@ export default config({
           links: true,
           images: true,
         }),
+        featuredImage: fields.image({ label: "Featured Image", directory: "public/images" }),
         publishedDate: fields.date({ label: "Published Date" }),
       },
     }),
@@ -138,6 +143,34 @@ export default config({
           links: true,
           images: true,
         }),
+        publishedDate: fields.date({ label: "Published Date" }),
+      },
+    }),
+    specials: collection({
+      label: "Specials",
+      slugField: "title",
+      path: "content/specials/*",
+      format: { contentField: "content" },
+      columns: ["title"],
+      schema: {
+        title: fields.slug({ name: { label: "Specials Description" } }),
+        content: fields.document({
+          label: "Content",
+          formatting: true,
+          dividers: true,
+          links: true,
+          images: true,
+        }),
+        specialOffer: fields.checkbox({
+          label: "Show this special on Home Page",
+          description: "By checking this checkbox the special will show on the homepage.",
+        }),
+        vagaroWidget: fields.text({
+          label: "Vagaro Widget HTML",
+          multiline: true,
+          validation: { isRequired: true },
+        }),
+        featuredImage: fields.image({ label: "Featured Image", directory: "public/images", validation: { isRequired: true } }),
         publishedDate: fields.date({ label: "Published Date" }),
       },
     }),

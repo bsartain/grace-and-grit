@@ -27,3 +27,7 @@ export async function getTestimonials() {
 export async function getContactSection() {
   return await reader.collections.contactSection.all();
 }
+
+export async function getSpecialOffer() {
+  return await reader.collections.specials.all();
+}
