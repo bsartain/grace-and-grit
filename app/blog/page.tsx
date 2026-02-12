@@ -13,6 +13,7 @@ export default async function BlogPage() {
     const dateB = new Date(b.entry.publishedDate || "");
     return dateB.getTime() - dateA.getTime();
   });
+  console.log("🚀 ~ BlogPage ~ sortedPosts:", sortedPosts[0]?.entry.featuredImage);
 
   return (
     <>
@@ -21,7 +22,7 @@ export default async function BlogPage() {
         id="home"
         className="hero"
         style={{
-          backgroundImage: `url('/images/${sortedPosts[0].slug}/featuredImage.JPG')`,
+          backgroundImage: `url('/images/${sortedPosts[0].slug}/${sortedPosts[0]?.entry?.featuredImage}')`,
         }}
       >
         <div className="hero-content">
@@ -31,14 +32,19 @@ export default async function BlogPage() {
           <span className="d-flex justify-content-center">
             <hr className="w-25" />
           </span>
-          <img src="/images/large-pink-logo-tagline.png" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="hero-logo w-25" />
+          <img
+            src="/images/large-pink-logo-tagline.png"
+            alt="Grace and Grit | Spin Studio | Rock Hill SC"
+            className="hero-logo"
+            style={{ width: "200px" }}
+          />
         </div>
       </div>
       <div className="container mx-auto px-4 py-8 mt-5 mb-5">
         <div className="container">
           <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {sortedPosts.map((post: KeystaticEntry, index: number) => {
-              const imageUrl = `/images/${post.slug}/featuredImage.JPG`;
+              const imageUrl = `/images/${post.slug}/${post.entry.featuredImage}`;
               return (
                 <div className="col" key={index}>
                   <div className="card h-100">

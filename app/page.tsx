@@ -114,7 +114,7 @@ export default async function Home() {
                   <div className="special-container">
                     <div className="flex-shrink-0">
                       <img
-                        src={`/images/${item.slug}/featuredImage.JPG`}
+                        src={`/images/${item.slug}/${item.entry.featuredImage}`}
                         alt="Description"
                         className="img-fluid rounded"
                         style={{ width: "300px", objectFit: "cover" }}
