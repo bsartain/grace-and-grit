@@ -29,12 +29,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getPost(slug);
+  console.log("🚀 ~ BlogPostPage ~ params:", post);
 
   if (!post) {
     notFound();
   }
 
-  const imageUrl = slug ? `/images/${slug}/featuredImage.JPG` : "/images/home-hero.JPG";
+  const imageUrl = slug ? `/images/${slug}/${post.featuredImage}` : "/images/home-hero.JPG";
 
   return (
     <>
@@ -53,7 +54,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <span className="d-flex justify-content-center">
             <hr className="w-25" />
           </span>
-          <img src="/images/large-pink-logo-tagline.png" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="hero-logo w-25" />
+          <img
+            src="/images/large-pink-logo-tagline.png"
+            alt="Grace and Grit | Spin Studio | Rock Hill SC"
+            className="hero-logo"
+            style={{ width: "200px" }}
+          />
         </div>
       </div>
       <article className="container mx-auto px-4 py-8 max-w-3xl mt-5 mb-5">
