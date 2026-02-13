@@ -136,8 +136,10 @@ export default async function Home() {
                         <CardTitle className="spin-class-description">{item.entry.title}</CardTitle>
                         <CardText className="spin-class-tagline">{item.entry.excerpt}</CardText>
                         <CardText className="spin-class-price">
-                          ${item.entry.price}
-                          <span className="spin-class-per-session">per session</span>
+                          <div className="class-price">
+                            ${item.entry.price}
+                            <span className="spin-class-per-session">per session</span>
+                          </div>
                         </CardText>
                         <div className="d-grid gap-2">{scriptUrl ? <VagaroWidget widgetUrl={scriptUrl} /> : null}</div>
                       </CardBody>

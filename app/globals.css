@@ -110,9 +110,13 @@ h1 {
     font-size: 50px;
     margin-top: 40px;
     font-weight: 500 !important;
+    .class-price {
+      font-size: 40px !important;
+    }
   }
   .spin-class-per-session {
-    font-size: 12px;
+    font-size: 18px;
+    margin-left: 5px;
   }
   .spin-class-schedule-button {
     border: 1px solid #ffffff !important;
