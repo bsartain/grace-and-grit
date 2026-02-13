@@ -1,5 +1,3 @@
-import type { NextConfig } from "next";
-
 const nextConfig = {
   eslint: {
     // Only run ESLint on these directories during production builds

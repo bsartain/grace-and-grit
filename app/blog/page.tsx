@@ -13,7 +13,6 @@ export default async function BlogPage() {
     const dateB = new Date(b.entry.publishedDate || "");
     return dateB.getTime() - dateA.getTime();
   });
-  console.log("🚀 ~ BlogPage ~ sortedPosts:", sortedPosts[0]?.entry.featuredImage);
 
   return (
     <>
@@ -32,6 +31,7 @@ export default async function BlogPage() {
           <span className="d-flex justify-content-center">
             <hr className="w-25" />
           </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/large-pink-logo-tagline.png"
             alt="Grace and Grit | Spin Studio | Rock Hill SC"
@@ -49,6 +49,7 @@ export default async function BlogPage() {
                 <div className="col" key={index}>
                   <div className="card h-100">
                     <Link href={`/blog/${post.slug}`} passHref className="card-title-link">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={imageUrl} className="card-img-top" alt={`Rock Hill Spin Studio | ${post.slug}`} />
                     </Link>
                     <div className="card-body">

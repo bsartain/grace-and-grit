@@ -29,7 +29,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getPost(slug);
-  console.log("🚀 ~ BlogPostPage ~ params:", post);
 
   if (!post) {
     notFound();
@@ -54,6 +53,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <span className="d-flex justify-content-center">
             <hr className="w-25" />
           </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/large-pink-logo-tagline.png"
             alt="Grace and Grit | Spin Studio | Rock Hill SC"

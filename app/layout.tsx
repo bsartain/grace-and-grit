@@ -6,7 +6,7 @@ import { Arsenal, Source_Sans_3 } from "next/font/google";
 
 const arsenal = Arsenal({
   subsets: ["latin"],
-  weight: ["400", "700"], // Specify the weights you need
+  weight: ["400", "700"],
   display: "swap",
 });
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import Link from "next/link";
 
 interface DrawerProps {
   color?: string;
@@ -9,7 +10,6 @@ interface DrawerProps {
 
 const Drawer: React.FC<DrawerProps> = ({ color = "text-dark", brandName = "Grace & Grit" }) => {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -24,6 +24,7 @@ const Drawer: React.FC<DrawerProps> = ({ color = "text-dark", brandName = "Grace
         {/* Clean Header */}
         <Offcanvas.Header closeButton className="drawer-header">
           <Offcanvas.Title className="drawer-brand">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/drawer-logo.png" alt="Grace and Grit | Rock Hill | Spin Studio" className="drawer-logo" />
           </Offcanvas.Title>
         </Offcanvas.Header>
@@ -32,21 +33,25 @@ const Drawer: React.FC<DrawerProps> = ({ color = "text-dark", brandName = "Grace
         <Offcanvas.Body className="drawer-body">
           <nav className="drawer-nav">
             <Nav className="drawer-nav-list">
-              <Nav.Link href="#rates" onClick={handleClose} className="drawer-nav-link">
+              <Link href="/#rates" onClick={handleClose} className="drawer-nav-link">
                 Rates
-              </Nav.Link>
+              </Link>
 
-              <Nav.Link href="#about" onClick={handleClose} className="drawer-nav-link">
+              <Link href="/#about" onClick={handleClose} className="drawer-nav-link">
                 About
-              </Nav.Link>
+              </Link>
 
-              <Nav.Link href="#testimonials" onClick={handleClose} className="drawer-nav-link">
+              <Link href="/#testimonials" onClick={handleClose} className="drawer-nav-link">
                 Testimonials
-              </Nav.Link>
+              </Link>
 
-              <Nav.Link href="#contact" onClick={handleClose} className="drawer-nav-link">
+              <Link href="/#contact" onClick={handleClose} className="drawer-nav-link">
                 Contact
-              </Nav.Link>
+              </Link>
+
+              <Link href={"/blog"} onClick={handleClose} className="drawer-nav-link">
+                Blog
+              </Link>
             </Nav>
           </nav>
 

@@ -11,19 +11,18 @@ export default function VagaroWidget({ widgetUrl }: VagaroWidgetProps) {
   const widgetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const container = widgetRef.current;
+    if (!container) return;
+
     const script = document.createElement("script");
     script.src = widgetUrl;
     script.type = "text/javascript";
     script.async = true;
 
-    if (widgetRef.current) {
-      widgetRef.current.appendChild(script);
-    }
+    container.appendChild(script);
 
     return () => {
-      if (widgetRef.current && script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
+      container.removeChild(script);
     };
   }, [widgetUrl]);
 
