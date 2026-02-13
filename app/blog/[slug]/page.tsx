@@ -54,12 +54,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <hr className="w-25" />
           </span>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/large-pink-logo-tagline.png"
-            alt="Grace and Grit | Spin Studio | Rock Hill SC"
-            className="hero-logo"
-            style={{ width: "200px" }}
-          />
+          <img src="/images/large-pink-logo-tagline.png" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="hero-logo" />
         </div>
       </div>
       <article className="container mx-auto px-4 py-8 max-w-3xl mt-5 mb-5">

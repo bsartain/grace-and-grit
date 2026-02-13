@@ -32,12 +32,7 @@ export default async function BlogPage() {
             <hr className="w-25" />
           </span>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/large-pink-logo-tagline.png"
-            alt="Grace and Grit | Spin Studio | Rock Hill SC"
-            className="hero-logo"
-            style={{ width: "200px" }}
-          />
+          <img src="/images/large-pink-logo-tagline.png" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="hero-logo" />
         </div>
       </div>
       <div className="container mx-auto px-4 py-8 mt-5 mb-5">
