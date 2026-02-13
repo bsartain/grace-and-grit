@@ -63,19 +63,6 @@ export default async function Home() {
     return match ? match[1] : null;
   }
 
-  const formatTel = (tel: string) => {
-    return tel.replace(/[^a-zA-Z0-9]/g, "");
-  };
-
-  const googleEmbedString = (html: string) => {
-    const match = html.match(/src="([^"]+)"/);
-
-    const url = match
-      ? match[1]
-      : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3170.1663844205364!2d-81.0173780525053!3d34.921126490165754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x885688597bdf05f9%3A0x59b623a0f096e59b!2s621%20E%20Main%20St%2C%20Rock%20Hill%2C%20SC%2029730!5e0!3m2!1sen!2sus!4v1764106199037!5m2!1sen!2sus";
-    return url;
-  };
-
   return (
     <>
       <CustomNavbar />
@@ -87,6 +74,7 @@ export default async function Home() {
         }}
       >
         <div className="hero-content">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/large-pink-logo-tagline.png" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="hero-logo" />
           <span className="d-flex justify-content-center">
             <hr className="w-25" />
@@ -113,6 +101,7 @@ export default async function Home() {
                 <Container>
                   <div className="special-container">
                     <div className="flex-shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={`/images/${item.slug}/${item.entry.featuredImage}`}
                         alt="Description"
@@ -191,6 +180,7 @@ export default async function Home() {
                       <DocumentRenderer document={await item.entry.content()} />
                     </div>
                     <div className="about-image-wrapper">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src="/images/bike-lower.jpg" alt="Grace and Grit | Spin Studio | Rock Hill SC" className="about-image" />
                     </div>
                   </div>
