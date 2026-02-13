@@ -26,7 +26,7 @@ export default async function SignUpWidget() {
                       <CardBody>
                         <CardTitle className="spin-class-description">{item.entry.title}</CardTitle>
                         <CardText className="spin-class-tagline">{item.entry.excerpt}</CardText>
-                        <CardText className="spin-class-price">
+                        <CardText className="spin-class-price" style={{ fontSize: "40px" }}>
                           ${item.entry.price}
                           <span className="spin-class-per-session">per session</span>
                         </CardText>
