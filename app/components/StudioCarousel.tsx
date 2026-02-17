@@ -34,12 +34,6 @@ const StudioCarousel: React.FC<{ slides: readonly CarouselSlide[] }> = ({ slides
           spacing: 10,
         },
       },
-      "(max-width: 1024px)": {
-        slides: {
-          perView: 2,
-          spacing: 5,
-        },
-      },
     },
     initial: 0,
     slideChanged(slider) {
