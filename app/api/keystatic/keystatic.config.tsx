@@ -1,4 +1,4 @@
-import { config, collection, fields } from "@keystatic/core";
+import { config, collection, singleton, fields } from "@keystatic/core";
 
 export default config({
   storage:
@@ -172,6 +172,32 @@ export default config({
         }),
         featuredImage: fields.image({ label: "Featured Image", directory: "public/images", validation: { isRequired: true } }),
         publishedDate: fields.date({ label: "Published Date" }),
+      },
+    }),
+  },
+
+  singletons: {
+    studioCarousel: singleton({
+      label: "Studio Carousel",
+      path: "content/studio-carousel/",
+      schema: {
+        carouselSlides: fields.array(
+          fields.object({
+            image: fields.image({
+              label: "Slide Image",
+              directory: "public/images/carousel",
+              publicPath: "/images/carousel",
+            }),
+            heading: fields.text({ label: "Heading" }),
+            subheading: fields.text({ label: "Subheading", multiline: true }),
+            ctaLabel: fields.text({ label: "Button Label" }),
+            ctaHref: fields.text({ label: "Button Link" }),
+          }),
+          {
+            label: "Carousel Slides",
+            itemLabel: (props) => props.fields.heading.value || "Slide",
+          }
+        ),
       },
     }),
   },
