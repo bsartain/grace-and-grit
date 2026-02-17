@@ -3,10 +3,11 @@ import { Container, Row, Col, Card, CardBody, CardTitle, CardText, Spinner } fro
 import CustomNavbar from "@/app/components/Navbar";
 import TestimonialCarousel from "@/app/components/TestimonialCarousel";
 import VagaroWidget from "@/app/components/VagaroWidget";
-import { getAllHomePosts, getRatesAndServices, getTestimonials, getSpecialOffer } from "@/app/api/keystatic/lib/keystatic";
+import { getAllHomePosts, getRatesAndServices, getTestimonials, getSpecialOffer, getCarouselImages } from "@/app/api/keystatic/lib/keystatic";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 import type { DocumentElement } from "@keystatic/core";
 import Footer from "./components/Footer";
+import StudioCarousel from "./components/StudioCarousel";
 
 export interface KeystaticEntry {
   slug: string;
@@ -34,6 +35,18 @@ export interface ProcessedTestimonial {
   publishedDate: string | null;
 }
 
+interface CarouselSlide {
+  readonly image: string | null;
+  readonly heading: string;
+  readonly subheading: string;
+  readonly ctaLabel: string;
+  readonly ctaHref: string;
+}
+
+interface StudioImagesForCarousel {
+  readonly carouselSlides: readonly CarouselSlide[];
+}
+
 export default async function Home() {
   const homePosts: KeystaticEntry[] = await getAllHomePosts();
   const initialTestimonialData = await getTestimonials();
@@ -54,6 +67,9 @@ export default async function Home() {
   const aboutSection: KeystaticEntry[] = homePosts.filter((item: { slug: string }) => item.slug === "about-us");
 
   const rates = (await getRatesAndServices()).sort((a: KeystaticEntry, b: KeystaticEntry) => (a.entry.order || 0) - (b.entry.order || 0));
+
+  const studioImagesForCarousel: StudioImagesForCarousel | null = await getCarouselImages();
+  const slides = studioImagesForCarousel?.carouselSlides ?? [];
 
   const specialOffer = await getSpecialOffer();
   const hasSpecialOffer = specialOffer.some((item: KeystaticEntry) => item.entry.specialOffer);
@@ -136,10 +152,10 @@ export default async function Home() {
                         <CardTitle className="spin-class-description">{item.entry.title}</CardTitle>
                         <CardText className="spin-class-tagline">{item.entry.excerpt}</CardText>
                         <CardText className="spin-class-price">
-                          <div className="class-price">
+                          <span className="class-price">
                             ${item.entry.price}
                             <span className="spin-class-per-session">per session</span>
-                          </div>
+                          </span>
                         </CardText>
                         <div className="d-grid gap-2">{scriptUrl ? <VagaroWidget widgetUrl={scriptUrl} /> : null}</div>
                       </CardBody>
@@ -155,20 +171,6 @@ export default async function Home() {
           </Row>
         </Container>
       </section>
-
-      {/* <section id="ebook" className="section ebook">
-        <Container className="ebook-container">
-          <div className="ebook-image" style={{ backgroundImage: `url("/images/nutrition-ebook.jpg")` }}></div>
-          <div className="ebook-copy">
-            <h1>Free E-Book with Your First Session</h1>
-            <p>
-              Today it’s harder than ever to figure out what’s actually good for your body. This straightforward ebook gives you simple, sustainable
-              nutrition strategies to fuel your workouts and your daily life. Inside, you’ll find easy recipes, balanced meal ideas, and practical
-              tips to help you eat with intention, energy, and confidence.
-            </p>
-          </div>
-        </Container>
-      </section> */}
 
       <section id="about" className="section about">
         <Container>
@@ -196,6 +198,8 @@ export default async function Home() {
           )}
         </Container>
       </section>
+
+      <StudioCarousel slides={slides} />
 
       <section id="testimonials" className="section bg-dark-green testimonials text-white">
         <Container>

@@ -31,3 +31,7 @@ export async function getContactSection() {
 export async function getSpecialOffer() {
   return await reader.collections.specials.all();
 }
+
+export async function getCarouselImages() {
+  return await reader.singletons.studioCarousel.read();
+}
